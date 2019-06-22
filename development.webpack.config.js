@@ -1,17 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const merge = require('webpack-merge');
 
-module.exports = () => ({
+const mainConfig = require('./main.webpack.config');
+
+const devConfig = {
   mode: 'development',
   devtool: '#eval-source-map',
-  resolve: {
-    extensions: ['.mjs', '.js', '.jsx', '.json'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules']
-  },
 
   entry: {
     host: 'webpack-dev-server/client?http://localhost:3001/',
@@ -21,88 +19,38 @@ module.exports = () => ({
 
   output: {
     filename: 'js/[name].[hash].js',
-    path: path.join(__dirname, 'public'),
-    publicPath: 'http://localhost:3001/'
+    path: path.join(__dirname, 'public')
   },
 
-
   devServer: {
+    inline: true,
+    hot: true,
     host: 'localhost',
     port: 3001,
     headers: { 'Access-Control-Allow-Origin': '*' },
     disableHostCheck: true,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: [
+      path.join(__dirname, 'resources')
+    ],
+    watchContentBase: true,
     open: 'google-chrome'
-  },
-
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/i,
-        exclude: /node_modules/,
-        use: 'babel-loader'
-      },
-
-      {
-        test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            'postcss-loader',
-            {
-              loader: 'less-loader',
-              options: {
-                javascriptEnabled: true,
-              },
-            },
-          ],
-        }),
-      },
-
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
-      },
-
-      {
-        test: /\.(eot|gif|jpe?g|png|svg|ttf|woff|woff2)$/i,
-        include: /[/\\](fonts|img)[/\\]/,
-        loader: 'file-loader',
-        options: {
-          name: filePath =>
-            /(\\|\/)fonts(\\|\/)/.test(filePath)
-              ? 'fonts/[name][hash].[ext]'
-              : 'img/[name][hash].[ext]'
-        },
-      },
-
-      {
-        include: /[/\\]icons[/\\]/,
-        loader: 'svg-react-loader',
-        test: /\.svg$/
-      },
-    ]
   },
 
   plugins: [
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['public/']
     }),
-    new ExtractTextPlugin({
-      filename: 'css/styles.[chunkhash].css'
-    }),
     new HtmlWebpackPlugin({
-      alwaysWriteToDisk: true,
       filename: 'index.html',
-      template: './src/index.html'
+      template: path.join(__dirname, 'resources/html/index.html'),
     }),
-    new HtmlWebpackHarddiskPlugin(),
-    new webpack.WatchIgnorePlugin([path.resolve(__dirname, 'node_modules')]),
+    new MiniCssExtractPlugin({
+      filename: 'css/styles.[chunkhash].css',
+    }),
     new webpack.NamedModulesPlugin()
   ]
-});
+};
+
+const config = merge(mainConfig, devConfig);
+module.exports = config;
