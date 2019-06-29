@@ -18,8 +18,8 @@ const devConfig = {
   },
 
   output: {
-    filename: 'js/[name].[hash].js',
-    path: path.join(__dirname, 'public')
+    filename: './js/[name].[hash].js',
+    path: path.resolve(__dirname, 'public')
   },
 
   devServer: {
@@ -34,7 +34,8 @@ const devConfig = {
       path.join(__dirname, 'resources')
     ],
     watchContentBase: true,
-    open: 'google-chrome'
+    open: 'google-chrome',
+    stats: 'errors-only'
   },
 
   plugins: [
@@ -44,9 +45,6 @@ const devConfig = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.join(__dirname, 'resources/html/index.html'),
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'css/styles.[chunkhash].css',
     }),
     new webpack.NamedModulesPlugin()
   ]

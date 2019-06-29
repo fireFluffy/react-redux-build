@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const merge = require('webpack-merge');
@@ -18,9 +17,8 @@ const prodConfig = {
   },
 
   output: {
-    filename: 'js/[name].[hash].js',
-    path: path.join(__dirname, 'build'),
-    publicPath: './',
+    filename: './js/[name].[hash].js',
+    path: path.resolve(__dirname, 'build'),
   },
 
   module: {
@@ -30,32 +28,25 @@ const prodConfig = {
         include: /[/\\](fonts|img)[/\\]/,
         loader: 'file-loader',
         options: {
-          name: filePath =>
-            /(\\|\/)fonts(\\|\/)/.test(filePath)
-              ? 'fonts/[name].[ext]'
-              : 'img/[name].[ext]'
+          name: filePath => {
+            console.log(filePath);
+            return /(\\|\/)fonts(\\|\/)/.test(filePath)
+            ? 'fonts/[name].[ext]'
+            : 'img/[name].[ext]';
+          }
         },
       },
-
-      {
-        include: /[/\\]icons[/\\]/,
-        loader: 'svg-react-loader',
-        test: /\.svg$/
-      }
     ]
-  }
+  },
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['build/']
-    }),
-    new ExtractTextPlugin({
-      filename: 'css/styles.[chunkhash].css',
+      cleanOnceBeforeBuildPatterns: [path.join(process.cwd(), 'build/**/*'),]
     }),
     new HtmlWebpackPlugin({
       alwaysWriteToDisk: true,
       filename: 'index.html',
-      template: './src/index.html'
+      template: path.join(__dirname, 'resources/html/index.html'),
     }),
     new HtmlWebpackHarddiskPlugin()
   ],

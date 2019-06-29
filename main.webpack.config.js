@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 
 module.exports = {
   resolve: {
@@ -24,9 +25,6 @@ module.exports = {
           'postcss-loader',
           {
             loader: 'less-loader',
-            options: {
-              javascriptEnabled: true
-            }
           }
         ]
       },
@@ -37,11 +35,35 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           'css-loader'
         ]
+      }, 
+
+      {
+        test: /\.(eot|gif|jpe?g|png|svg|ttf|woff|woff2)$/i,
+        include: /[/\\](fonts|img)[/\\]/,
+        loader: 'file-loader',
+        options: {
+          name: filePath => {
+            console.log(filePath);
+            return /(\\|\/)fonts(\\|\/)/.test(filePath)
+            ? 'fonts/[name].[ext]'
+            : 'img/[name].[ext]';
+          }
+        },
+      },
+
+      {
+        include: /[/\\]icons[/\\]/,
+        loader: 'svg-react-loader',
+        test: /\.svg$/
       }
     ]
   },
 
   plugins: [
+    new FixStyleOnlyEntriesPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'css/styles.[chunkhash].css',
+    }),
     new webpack.WatchIgnorePlugin([path.resolve(__dirname, 'node_modules')])
   ]
 };
