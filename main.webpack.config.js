@@ -3,12 +3,10 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 
-const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
-
 module.exports = {
   resolve: {
     extensions: ['.mjs', '.js', '.jsx', '.json'],
-    modules: [path.resolve(__dirname), 'node_modules']
+    modules: [path.resolve(__dirname), 'node_modules'],
   },
 
   module: {
@@ -16,7 +14,7 @@ module.exports = {
       {
         test: /\.jsx?$/i,
         exclude: /node_modules/,
-        use: 'babel-loader'
+        loader: 'babel-loader',
       },
 
       {
@@ -25,23 +23,23 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: '../'
-            }
+              publicPath: '../',
+            },
           },
           'css-loader',
           'postcss-loader',
           {
             loader: 'less-loader',
-          }
-        ]
+          },
+        ],
       },
 
       {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader'
-        ]
+          'css-loader',
+        ],
       },
 
       {
@@ -49,22 +47,22 @@ module.exports = {
         include: /[/\\](fonts|img)[/\\]/,
         loader: 'file-loader',
         options: {
-          name(file) {
+          name() {
             if (process.env.NODE_ENV === 'development') {
               return '[path][name].[ext]';
             }
 
             return 'assets/[hash].[ext]';
           },
-        }
+        },
       },
 
       {
         include: /[/\\]icons[/\\]/,
         loader: 'svg-react-loader',
-        test: /\.svg$/
-      }
-    ]
+        test: /\.svg$/,
+      },
+    ],
   },
 
   plugins: [
@@ -72,6 +70,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/styles.[chunkhash].css',
     }),
-    new webpack.WatchIgnorePlugin([path.resolve(__dirname, 'node_modules')])
-  ]
+    new webpack.WatchIgnorePlugin([path.resolve(__dirname, 'node_modules')]),
+  ],
 };
