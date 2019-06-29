@@ -13,7 +13,8 @@ const devConfig = {
   devtool: 'eval-source-map',
 
   entry: {
-    host: 'webpack-dev-server/client?http://localhost:3001/',
+    host: 'webpack-dev-server/client?http://localhost:3001',
+    hot: 'webpack/hot/only-dev-server',
     bundle: './src/index.tsx',
     styles: './assets/less/global.less',
   },
@@ -24,14 +25,14 @@ const devConfig = {
   },
 
   devServer: {
+    hotOnly: true,
     inline: true,
-    hot: true,
     host: 'localhost',
     port: 3001,
     headers: { 'Access-Control-Allow-Origin': '*' },
     disableHostCheck: true,
     historyApiFallback: true,
-    contentBase: [path.join(__dirname, 'assets')],
+    contentBase: [path.join(__dirname, 'public')],
     watchContentBase: true,
     open: 'google-chrome',
     stats: 'errors-only',
