@@ -2,6 +2,7 @@
   "name": "react-redux-build",
   "version": "1.0.0",
   "author": "fireFluffy <tommywork@yandex.ru>",
+  "description": "bundle",
   "license": "MIT",
   "private": false,
   "repository": {
@@ -11,10 +12,13 @@
   "main": "src/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server",
-    "build": "cross-env NODE_ENV=production webpack"
+    "build": "cross-env NODE_ENV=production webpack",
+    "lint": "eslint \"./src/**\" --ext .js,.jsx --ignore-pattern node_modules/",
+    "lint:fix": "eslint --fix \"./src/**\" --ext .js,.jsx --ignore-pattern node_modules/"
   },
   "dependencies": {
     "css-reset-and-normalize": "^2.0.1",
+    "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
@@ -27,13 +31,27 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "autoprefixer": "^9.6.0",
+    "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
     "babel-plugin-import": "^1.12.0",
+    "clean-terminal-webpack-plugin": "^2.0.3",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.3",
     "cross-env": "^5.2.0",
     "css-loader": "^3.0.0",
     "cssnano": "^4.1.10",
+    "eslint": "5.16.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-import-resolver-webpack": "^0.11.1",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-compat": "^3.2.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-lodash": "^5.1.0",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-optimize-regex": "^1.1.6",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.11.0",
     "file-loader": "^4.0.0",
     "html-webpack-harddisk-plugin": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
@@ -49,5 +67,8 @@
     "webpack-dev-server": "^3.7.2",
     "webpack-fix-style-only-entries": "^0.3.0",
     "webpack-merge": "^4.2.1"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
   }
 }

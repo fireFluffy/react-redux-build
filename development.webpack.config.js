@@ -1,10 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
+const CleanTerminalPlugin = require('clean-terminal-webpack-plugin');
 
 const mainConfig = require('./main.webpack.config');
 
@@ -15,7 +15,7 @@ const devConfig = {
   entry: {
     host: 'webpack-dev-server/client?http://localhost:3001/',
     bundle: './src/index.jsx',
-    styles: './assets/less/global.less'
+    styles: './assets/less/global.less',
   },
 
   output: {
@@ -32,28 +32,52 @@ const devConfig = {
     disableHostCheck: true,
     historyApiFallback: true,
     contentBase: [
-      path.join(__dirname, 'assets')
+      path.join(__dirname, 'assets'),
     ],
     watchContentBase: true,
     open: 'google-chrome',
-    stats: 'errors-only'
+    stats: 'errors-only',
+    publicPath: '/',
+  },
+
+  module: {
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.jsx?$/i,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'eslint-loader',
+            options: {
+              emitError: true,
+              emitWarning: true,
+              failOnWarning: false,
+              failOnError: false,
+              outputReport: false,
+            },
+          },
+        ],
+      },
+    ],
   },
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [path.join(process.cwd(), 'public/**/*'),]
+      cleanOnceBeforeBuildPatterns: [path.join(process.cwd(), 'public/**/*')],
     }),
     new CopyWebpackPlugin([
       {
-        from: 'assets/favicon', to: './assets/favicon'
-      }
+        from: 'assets/favicon', to: './assets/favicon',
+      },
     ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.join(__dirname, 'assets/html/index.html'),
     }),
-    new webpack.NamedModulesPlugin()
-  ]
+    new CleanTerminalPlugin(),
+    new webpack.NamedModulesPlugin(),
+  ],
 };
 
 const config = merge(mainConfig, devConfig);
