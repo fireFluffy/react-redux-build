@@ -17,10 +17,12 @@
     "lint:fix": "eslint --fix \"./src/**\" --ext .js,.jsx --ignore-pattern node_modules/"
   },
   "dependencies": {
+    "@hot-loader/react-dom": "^16.8.6",
     "css-reset-and-normalize": "^2.0.1",
     "lodash": "^4.17.11",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "npm:@hot-loader/react-dom",
+    "react-hot-loader": "^4.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
