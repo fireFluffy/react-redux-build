@@ -25,8 +25,15 @@ const prodConfig = {
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [path.join(process.cwd(), 'build/**/*'),]
+      cleanOnceBeforeBuildPatterns: [
+        path.join(process.cwd(), 'build/**/*')
+      ]
     }),
+    new CopyWebpackPlugin([
+      {
+        from: 'assets/favicon', to: './assets/favicon'
+      }
+    ]),
     new HtmlWebpackPlugin({
       alwaysWriteToDisk: true,
       filename: 'index.html',

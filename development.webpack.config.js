@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
 
 const mainConfig = require('./main.webpack.config');
@@ -40,8 +41,13 @@ const devConfig = {
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['public/']
+      cleanOnceBeforeBuildPatterns: [path.join(process.cwd(), 'public/**/*'),]
     }),
+    new CopyWebpackPlugin([
+      {
+        from: 'assets/favicon', to: './assets/favicon'
+      }
+    ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.join(__dirname, 'assets/html/index.html'),
