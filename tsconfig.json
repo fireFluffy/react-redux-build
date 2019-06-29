@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strict": false,
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "es6",
@@ -11,7 +12,7 @@
     "./src/**/*"
   ],
   "exclude": [
-    "node_modules",
+    "node_modules/**/*",
     "**/*.spec.ts"
   ]
 }

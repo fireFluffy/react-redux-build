@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { hot } from 'react-hot-loader';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-class App extends React.PureComponent {
+class App extends React.PureComponent<null, null> {
   public render() {
     return (
-      <div>
-        <div>Type Script</div>
-      </div>
+      <Router>
+        <div>
+          {console.log(this)}
+          <div>Type Script</div>
+        </div>
+      </Router>
     );
   }
 }

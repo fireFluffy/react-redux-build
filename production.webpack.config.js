@@ -13,8 +13,8 @@ const prodConfig = {
   mode: 'production',
 
   entry: {
-    bundle: './src/index.jsx',
-    styles: './assets/less/global.less'
+    bundle: './src/index.tsx',
+    styles: './assets/less/global.less',
   },
 
   output: {
@@ -25,21 +25,20 @@ const prodConfig = {
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [
-        path.join(process.cwd(), 'build/**/*')
-      ]
+      cleanOnceBeforeBuildPatterns: [path.join(process.cwd(), 'build/**/*')],
     }),
     new CopyWebpackPlugin([
       {
-        from: 'assets/favicon', to: './assets/favicon'
-      }
+        from: 'assets/favicon',
+        to: './assets/favicon',
+      },
     ]),
     new HtmlWebpackPlugin({
       alwaysWriteToDisk: true,
       filename: 'index.html',
       template: path.join(__dirname, 'assets/html/index.html'),
     }),
-    new HtmlWebpackHarddiskPlugin()
+    new HtmlWebpackHarddiskPlugin(),
   ],
 
   optimization: {
@@ -52,11 +51,11 @@ const prodConfig = {
           output: {
             beautify: false,
             comments: false,
-          }
-        }
-      })
-    ]
-  }
+          },
+        },
+      }),
+    ],
+  },
 };
 
 const config = merge(mainConfig, prodConfig);
