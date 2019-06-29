@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 
+const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
+
 module.exports = {
   resolve: {
     extensions: ['.mjs', '.js', '.jsx', '.json'],
@@ -20,7 +22,12 @@ module.exports = {
       {
         test: /\.less$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../'
+            }
+          },
           'css-loader',
           'postcss-loader',
           {
@@ -35,20 +42,21 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           'css-loader'
         ]
-      }, 
+      },
 
       {
         test: /\.(eot|gif|jpe?g|png|svg|ttf|woff|woff2)$/i,
         include: /[/\\](fonts|img)[/\\]/,
         loader: 'file-loader',
         options: {
-          name: filePath => {
-            console.log(filePath);
-            return /(\\|\/)fonts(\\|\/)/.test(filePath)
-            ? 'fonts/[name].[ext]'
-            : 'img/[name].[ext]';
-          }
-        },
+          name(file) {
+            if (process.env.NODE_ENV === 'development') {
+              return '[path][name].[ext]';
+            }
+
+            return 'assets/[hash].[ext]';
+          },
+        }
       },
 
       {

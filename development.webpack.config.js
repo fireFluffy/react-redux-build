@@ -9,17 +9,17 @@ const mainConfig = require('./main.webpack.config');
 
 const devConfig = {
   mode: 'development',
-  devtool: '#eval-source-map',
+  devtool: 'eval-source-map',
 
   entry: {
     host: 'webpack-dev-server/client?http://localhost:3001/',
     bundle: './src/index.jsx',
-    styles: './resources/less/global.less'
+    styles: './assets/less/global.less'
   },
 
   output: {
     filename: './js/[name].[hash].js',
-    path: path.resolve(__dirname, 'public')
+    path: path.resolve(__dirname, 'public'),
   },
 
   devServer: {
@@ -31,7 +31,7 @@ const devConfig = {
     disableHostCheck: true,
     historyApiFallback: true,
     contentBase: [
-      path.join(__dirname, 'resources')
+      path.join(__dirname, 'assets')
     ],
     watchContentBase: true,
     open: 'google-chrome',
@@ -44,7 +44,7 @@ const devConfig = {
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.join(__dirname, 'resources/html/index.html'),
+      template: path.join(__dirname, 'assets/html/index.html'),
     }),
     new webpack.NamedModulesPlugin()
   ]
