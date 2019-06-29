@@ -1,16 +1,22 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 
 module.exports = {
   resolve: {
-    extensions: ['.mjs', '.js', '.jsx', '.json'],
+    extensions: ['.mjs', '.ts', '.tsx', '.js', '.jsx', '.json'],
     modules: [path.resolve(__dirname), 'node_modules'],
   },
 
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader',
+      },
+
       {
         test: /\.jsx?$/i,
         exclude: /node_modules/,
@@ -36,10 +42,7 @@ module.exports = {
 
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
 
       {

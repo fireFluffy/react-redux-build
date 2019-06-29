@@ -14,7 +14,7 @@ const devConfig = {
 
   entry: {
     host: 'webpack-dev-server/client?http://localhost:3001/',
-    bundle: './src/index.jsx',
+    bundle: './src/index.tsx',
     styles: './assets/less/global.less',
   },
 
@@ -31,9 +31,7 @@ const devConfig = {
     headers: { 'Access-Control-Allow-Origin': '*' },
     disableHostCheck: true,
     historyApiFallback: true,
-    contentBase: [
-      path.join(__dirname, 'assets'),
-    ],
+    contentBase: [path.join(__dirname, 'assets')],
     watchContentBase: true,
     open: 'google-chrome',
     stats: 'errors-only',
@@ -68,7 +66,8 @@ const devConfig = {
     }),
     new CopyWebpackPlugin([
       {
-        from: 'assets/favicon', to: './assets/favicon',
+        from: 'assets/favicon',
+        to: './assets/favicon',
       },
     ]),
     new HtmlWebpackPlugin({

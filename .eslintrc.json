@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 7,
     "sourceType": "module",
@@ -8,9 +8,11 @@
     }
   },
   "extends": [
+    "plugin:@typescript-eslint/recommended",
     "eslint:recommended",
     "airbnb",
     "prettier",
+    "prettier/@typescript-eslint",
     "prettier/react",
     "plugin:react/recommended",
     "plugin:compat/recommended",
@@ -22,6 +24,7 @@
     "plugin:prettier/recommended"
   ],
   "plugins": [
+    "@typescript-eslint",
     "react",
     "jsx-a11y",
     "promise",
@@ -31,7 +34,8 @@
   ],
   "rules": {
     "prettier/prettier": "error",
-    "no-loops/no-loops": 2
+    "no-loops/no-loops": 2,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", "ts", "tsx"] }]
   },
   "settings": {
     "import/resolver": "webpack",
