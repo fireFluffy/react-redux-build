@@ -10,13 +10,16 @@
   "extends": [
     "eslint:recommended",
     "airbnb",
+    "prettier",
+    "prettier/react",
     "plugin:react/recommended",
     "plugin:compat/recommended",
     "plugin:lodash/canonical",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:jsx-a11y/recommended",
-    "plugin:promise/recommended"
+    "plugin:promise/recommended",
+    "plugin:prettier/recommended"
   ],
   "plugins": [
     "react",
@@ -27,6 +30,7 @@
     "no-loops"
   ],
   "rules": {
+    "prettier/prettier": "error",
     "no-loops/no-loops": 2
   },
   "settings": {
