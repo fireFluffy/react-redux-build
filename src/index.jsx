@@ -5,8 +5,5 @@ import { render } from 'react-dom';
 const root = document.getElementById('root');
 
 if (root) {
-  render(
-    <div>Test site</div>,
-    root,
-  );
+  render(<div>Test site</div>, root);
 }
