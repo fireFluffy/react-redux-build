@@ -17,13 +17,14 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: 'ts-loader',
+        use: ['babel-loader'],
       },
 
       {
         test: /\.jsx?$/i,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        use: ['source-map-loader'],
+        enforce: 'pre',
       },
 
       {

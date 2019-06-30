@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "strict": false,
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "es6",
