@@ -7,10 +7,7 @@ class App extends React.PureComponent<{}, null> {
   public render() {
     return (
       <Router>
-        <div>
-          {console.log(this)}
-          <div>Type Script</div>
-        </div>
+        <div>Type Script</div>
       </Router>
     );
   }
