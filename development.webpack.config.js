@@ -42,8 +42,20 @@ const devConfig = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/i,
         enforce: 'pre',
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'tslint-loader',
+            options: {},
+          },
+        ],
+      },
+
+      {
         test: /\.jsx?$/i,
+        enforce: 'pre',
         exclude: /node_modules/,
         use: [
           {
