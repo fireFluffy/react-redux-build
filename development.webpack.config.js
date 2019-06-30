@@ -10,14 +10,9 @@ const mainConfig = require('./main.webpack.config');
 
 const devConfig = {
   mode: 'development',
-  devtool: 'eval-source-map',
+  devtool: '#eval-source-map',
 
-  entry: {
-    host: 'webpack-dev-server/client?http://localhost:3001',
-    hot: 'webpack/hot/only-dev-server',
-    bundle: './src/index.tsx',
-    styles: './assets/less/global.less',
-  },
+  entry: ['./src/index.tsx', './assets/less/global.less'],
 
   output: {
     filename: './js/[name].[hash].js',
@@ -25,8 +20,7 @@ const devConfig = {
   },
 
   devServer: {
-    hotOnly: true,
-    inline: true,
+    hot: true,
     host: 'localhost',
     port: 3001,
     headers: { 'Access-Control-Allow-Origin': '*' },
