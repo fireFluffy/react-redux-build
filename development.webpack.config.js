@@ -11,8 +11,7 @@ const mainConfig = require('./main.webpack.config');
 const devConfig = {
   mode: 'development',
   devtool: '#eval-source-map',
-
-  entry: ['./src/index.tsx', './assets/less/global.less'],
+  entry: ['./src/index.jsx', './assets/less/global.less'],
 
   output: {
     filename: './js/[name].[hash].js',
@@ -26,43 +25,27 @@ const devConfig = {
     headers: { 'Access-Control-Allow-Origin': '*' },
     disableHostCheck: true,
     historyApiFallback: true,
+    overlay: {
+      errors: true,
+      warnings: false,
+    },
     contentBase: [path.join(__dirname, 'public')],
     watchContentBase: true,
     open: 'google-chrome',
-    stats: 'errors-only',
+    stats: {
+      errors: true,
+      warnings: true,
+    },
     publicPath: '/',
   },
 
   module: {
     rules: [
       {
-        test: /\.tsx?$/i,
-        enforce: 'pre',
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'tslint-loader',
-            options: {},
-          },
-        ],
-      },
-
-      {
         test: /\.jsx?$/i,
         enforce: 'pre',
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'eslint-loader',
-            options: {
-              emitError: true,
-              emitWarning: true,
-              failOnWarning: false,
-              failOnError: false,
-              outputReport: false,
-            },
-          },
-        ],
+        use: 'eslint-loader',
       },
     ],
   },

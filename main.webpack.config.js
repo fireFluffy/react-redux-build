@@ -5,7 +5,7 @@ const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 
 module.exports = {
   resolve: {
-    extensions: ['.mjs', '.ts', '.tsx', '.js', '.jsx', '.json'],
+    extensions: ['.mjs', '.js', '.jsx', '.json'],
     modules: [path.resolve(__dirname), 'node_modules'],
     alias: {
       'react-dom': '@hot-loader/react-dom',
@@ -15,16 +15,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
-      },
-
-      {
-        test: /\.jsx?$/i,
-        exclude: /node_modules/,
-        use: ['source-map-loader'],
-        enforce: 'pre',
+        use: 'babel-loader',
       },
 
       {
@@ -38,7 +31,12 @@ module.exports = {
           },
           'css-loader',
           'postcss-loader',
-          { loader: 'less-loader', options: { javascriptEnabled: true } },
+          {
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true,
+            },
+          },
         ],
       },
 
