@@ -3,7 +3,7 @@ import testState from '../states';
 // Constants
 import TEST_CONSTANT from '../constants';
 
-const testReducer = (state = testState, { payload, type }: { payload: boolean; type: string }) => {
+const testReducer = (state = testState, { payload, type }) => {
   switch (type) {
     case TEST_CONSTANT:
       return {

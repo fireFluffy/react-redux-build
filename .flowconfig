@@ -1,0 +1,16 @@
+[ignore]
+/build/.*
+/public/.*
+/assetes/.*
+/.vscode/.*
+/resources/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

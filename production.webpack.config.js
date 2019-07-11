@@ -13,7 +13,7 @@ const prodConfig = {
   mode: 'production',
 
   entry: {
-    bundle: './src/index.tsx',
+    bundle: './src/index.jsx',
     styles: './assets/less/global.less',
   },
 
