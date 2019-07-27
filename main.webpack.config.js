@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 
+const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
+
 module.exports = {
   resolve: {
     extensions: ['.mjs', '.js', '.jsx', '.json'],
@@ -21,41 +23,26 @@ module.exports = {
       },
 
       {
-        test: /\.less$/,
+        test: /(\.css|\.less)$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../',
-            },
-          },
+          'style-loader',
+          { loader: MiniCssExtractPlugin.loader },
           'css-loader',
           'postcss-loader',
-          {
-            loader: 'less-loader',
-            options: {
-              javascriptEnabled: true,
-            },
-          },
+          'less-loader',
         ],
       },
 
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      },
-
-      {
-        test: /\.(eot|gif|jpe?g|png|svg|ttf|woff|woff2)$/i,
-        include: /[/\\](fonts|img)[/\\]/,
-        loader: 'file-loader',
-        options: {
-          name() {
-            if (process.env.NODE_ENV === 'development') {
-              return '[path][name].[ext]';
-            }
-
-            return 'assets/[hash].[ext]';
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            fallback: 'file-loader',
+            name: '[hash].[ext]',
+            publicPath: IS_DEVELOPMENT ? '../files' : path.join(__dirname, 'build/files'),
+            outputPath: 'files',
+            limit: 100,
           },
         },
       },
