@@ -6,6 +6,7 @@
 /build/
 /dist/
 /release/
+/public/
 
 /.idea/
 /.DS_Store

@@ -16,27 +16,22 @@ const devConfig = {
   output: {
     filename: './js/[name].[hash].js',
     path: path.resolve(__dirname, 'public'),
+    publicPath: '/',
   },
 
   devServer: {
+    clientLogLevel: 'none',
     hot: true,
     host: 'localhost',
     port: 3001,
-    headers: { 'Access-Control-Allow-Origin': '*' },
     disableHostCheck: true,
     historyApiFallback: true,
-    overlay: {
-      errors: true,
-      warnings: false,
-    },
-    contentBase: [path.join(__dirname, 'public')],
+    overlay: false,
+    contentBase: [path.join(__dirname, 'public'), path.join(__dirname, 'assets')],
     watchContentBase: true,
-    open: 'google-chrome',
-    stats: {
-      errors: true,
-      warnings: true,
-    },
-    publicPath: '/',
+    open: true,
+    stats: 'minimal',
+    writeToDisk: false,
   },
 
   module: {

@@ -11,28 +11,31 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server",
-    "build": "cross-env NODE_ENV=production webpack",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --progress --color",
+    "build": "cross-env NODE_ENV=production webpack --progress --color",
     "lint": "eslint \"./src/**\" --ext .js,.jsx --ignore-pattern node_modules/",
     "lint:fix": "tsc --noEmit && eslint --quiet --fix \"./src/**\" --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules/",
     "flow": "node_modules/.bin/flow"
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.8.6",
-    "antd": "^3.19.8",
     "css-reset-and-normalize": "^2.0.1",
+    "history": "^4.9.0",
     "immer": "^3.1.3",
     "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-hot-loader": "^4.12.0",
+    "react-hot-loader": "^4.12.10",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.0.4",
     "reselect": "^4.0.0",
-    "styled-components": "^4.3.2"
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.87.3",
+    "styled-components": "^4.3.2",
+    "url-loader": "^2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
